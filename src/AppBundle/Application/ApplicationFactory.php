@@ -54,8 +54,7 @@ class ApplicationFactory
     private function getCommands()
     {
         return [
-            new PullCommand,
-            new PushCommand
+            new PullCommand
         ];
     }
 }
