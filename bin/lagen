@@ -1,0 +1,9 @@
+#!/usr/bin/env php
+<?php
+
+require __DIR__.'/../vendor/autoload.php';
+
+use AppBundle\Application\ApplicationFactory;
+
+$factory = new ApplicationFactory;
+$factory->create('Lagen', '0.1')->run();

@@ -1,0 +1,11 @@
+services:
+    app.provider.project:
+        class: AppBundle\Provider\ProjectProvider
+        arguments:
+            - "@app.client"
+    app.provider.feature:
+        class: AppBundle\Provider\FeatureProvider
+        arguments:
+            - "@app.client"
+            - "%project_slug%"
+            - "%root_dir%"

@@ -1,0 +1,5 @@
+services:
+    app.client:
+        class: AppBundle\Client\Client
+        arguments:
+            - "%server%"
