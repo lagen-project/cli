@@ -3,7 +3,6 @@
 namespace AppBundle\Application;
 
 use AppBundle\Command\PullCommand;
-use AppBundle\Command\PushCommand;
 use AppBundle\DependencyInjection\AppExtension;
 use AppBundle\DependencyInjection\ConfigurationExtension;
 use Symfony\Component\Console\Command\Command;
