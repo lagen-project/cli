@@ -27,6 +27,11 @@ class Client
     private $password;
 
     /**
+     * @var string
+     */
+    private $token;
+
+    /**
      * @var GuzzleClient
      */
     private $client;
@@ -40,6 +45,7 @@ class Client
         $this->port = $serverConfig['port'];
         $this->username = $serverConfig['username'];
         $this->password = $serverConfig['password'];
+        $this->token = null;
 
         $this->client = new GuzzleClient;
     }
@@ -76,12 +82,15 @@ class Client
     /**
      * @param string $uri
      * @param array $options
+     * @param bool $resolveHeaders
      *
      * @return array
      */
-    public function post($uri, $options = [])
+    public function post($uri, $options = [], $resolveHeaders = true)
     {
-        $this->resolveHeaders($options);
+        if ($resolveHeaders) {
+            $this->resolveHeaders($options);
+        }
         $response = $this
             ->client
             ->post(sprintf('%s:%d/%s', $this->baseUrl, $this->port, $uri), $options)
@@ -97,9 +106,17 @@ class Client
      */
     private function resolveHeaders(array &$options)
     {
+        if ($this->token === null) {
+            $this->token = $this->post('login_check', [
+                'form_params' => [
+                    '_username' => $this->username,
+                    '_password' => $this->password
+                ]
+            ], false)['token'];
+        }
+
         $options['headers'] = array_merge([
-            'X-USERNAME' => $this->username,
-            'X-PASSWORD' => $this->password
+            'Authorization' => sprintf('Bearer %s', $this->token)
         ], isset($options['headers']) ? $options['headers'] : []);
     }
 }
