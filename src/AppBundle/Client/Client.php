@@ -107,7 +107,7 @@ class Client
     private function resolveHeaders(array &$options)
     {
         if ($this->token === null) {
-            $this->token = $this->post('login_check', [
+            $this->token = $this->post('login', [
                 'form_params' => [
                     '_username' => $this->username,
                     '_password' => $this->password
